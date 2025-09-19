@@ -1,7 +1,7 @@
 package com.koreait.short_pj_25_09.global.initData;
 
 import com.koreait.short_pj_25_09.domain.article.article.entity.Article;
-import com.koreait.short_pj_25_09.domain.article.article.repository.ArticleRepository;
+import com.koreait.short_pj_25_09.domain.article.article.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -28,7 +28,7 @@ public class NotProd {
     // @LAZY, @Autowired 조합은 this의 외부 호출 모드 버전인 self를 얻을 수 있어
     // self를 통한 메서드 호출은 @Transactional가 가능해
 
-    private final ArticleRepository articleRepository;
+    private final ArticleService articleService;
 
     @Bean // 개발자가 new 하지 않아도 스프링부트가 직접 관리하는 객체
     public ApplicationRunner initDataNotProd() {
@@ -40,27 +40,14 @@ public class NotProd {
 
     @Transactional
     public void work1() {
-        if (articleRepository.count() > 0) return;
+        if (articleService.count() > 0) return;
 
-//        articleRepository.deleteAll();
-
-        Article article1 = Article.builder()
-                .title("제목1")
-                .body("내용1").build();
-
-        Article article2 = Article.builder()
-                .title("제목2")
-                .body("내용2").build();
-
-        System.out.println(article1.getId());
-        System.out.println(article2.getId());
-
-        articleRepository.save(article1);
-        articleRepository.save(article2);
+        Article article1 = articleService.write("제목1","내용1");
+        Article article2 = articleService.write("제목2","내용2");
 
         article2.setTitle("제목 2-2");
 
-        articleRepository.delete(article1);
+        articleService.delete(article1);
     }
 
     @Transactional
@@ -69,13 +56,8 @@ public class NotProd {
         // List : 0 ~ N
         // Optional : 0 ~ 1
 
-        Optional<Article> opArticle = articleRepository.findById(2L);
+        Optional<Article> opArticle = articleService.findById(2L);
 
-        List<Article> articles = articleRepository.findAll();
-
-        List<Article> articlesByIn = articleRepository.findAllByIdInOrderByTitleDescIdAsc(List.of(2L, 3L));
-
-        articleRepository.findByTitleContaining("제목");
-        articleRepository.findByTitleAndBody("제목","내용");
+        List<Article> articles = articleService.findAll();
     }
 }
