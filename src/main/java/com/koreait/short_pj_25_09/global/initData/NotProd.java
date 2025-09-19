@@ -42,8 +42,8 @@ public class NotProd {
     public void work1() {
         if (articleService.count() > 0) return;
 
-        Article article1 = articleService.write("제목1","내용1");
-        Article article2 = articleService.write("제목2","내용2");
+        Article article1 = articleService.write("제목1","내용1").getData();
+        Article article2 = articleService.write("제목2","내용2").getData();
 
         article2.setTitle("제목 2-2");
 
