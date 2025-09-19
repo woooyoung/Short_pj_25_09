@@ -1,5 +1,6 @@
-package com.koreait.short_pj_25_09;
+package com.koreait.short_pj_25_09.domain.short_url.short_url.controller;
 
+import com.koreait.short_pj_25_09.domain.short_url.short_url.entity.Surl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

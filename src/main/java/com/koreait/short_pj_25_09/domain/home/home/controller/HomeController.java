@@ -1,4 +1,4 @@
-package com.koreait.short_pj_25_09;
+package com.koreait.short_pj_25_09.domain.home.home.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.koreait.short_pj_25_09;
+package com.koreait.short_pj_25_09.domain.short_url.short_url.entity;
 
 import lombok.AccessLevel;
 import lombok.Builder;
