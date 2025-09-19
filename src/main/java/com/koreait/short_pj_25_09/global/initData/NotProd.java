@@ -72,5 +72,10 @@ public class NotProd {
         Optional<Article> opArticle = articleRepository.findById(2L);
 
         List<Article> articles = articleRepository.findAll();
+
+        List<Article> articlesByIn = articleRepository.findAllByIdInOrderByTitleDescIdAsc(List.of(2L, 3L));
+
+        articleRepository.findByTitleContaining("제목");
+        articleRepository.findByTitleAndBody("제목","내용");
     }
 }
