@@ -2,15 +2,18 @@ package com.koreait.short_pj_25_09.domain.article.article.service;
 
 import com.koreait.short_pj_25_09.domain.article.article.entity.Article;
 import com.koreait.short_pj_25_09.domain.article.article.repository.ArticleRepository;
+import com.koreait.short_pj_25_09.domain.member.member.entity.Member;
 import com.koreait.short_pj_25_09.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
@@ -18,6 +21,7 @@ public class ArticleService {
         return articleRepository.count();
     }
 
+    @Transactional
     public void delete(Article article) {
         articleRepository.delete(article);
     }
@@ -34,10 +38,11 @@ public class ArticleService {
     // - 이번에 생성된 게시글의 번호
     // - 게시글 생성에 대한 결과 메세지
     // - 결과 코드
-
-    public RsData<Article> write(String title, String body) {
+    @Transactional
+    public RsData<Article> write(Member member, String title, String body) {
         Article article = Article
                 .builder()
+                .author(member)
                 .title(title)
                 .body(body)
                 .build();

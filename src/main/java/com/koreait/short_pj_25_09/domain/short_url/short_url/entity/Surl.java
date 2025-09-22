@@ -1,21 +1,16 @@
 package com.koreait.short_pj_25_09.domain.short_url.short_url.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.koreait.short_pj_25_09.global.jpa.entity.BaseTime;
+import jakarta.persistence.Entity;
+import lombok.*;
 
-import java.time.LocalDateTime;
-
+@Entity
+@Builder
 @Getter
 @Setter
-@Builder
-public class Surl {
-    private long id;
-    @Builder.Default
-    private LocalDateTime createDate = LocalDateTime.now();
-    @Builder.Default
-    private LocalDateTime modifyDate = LocalDateTime.now();
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public class Surl extends BaseTime {
     private String body;
     private String url;
 

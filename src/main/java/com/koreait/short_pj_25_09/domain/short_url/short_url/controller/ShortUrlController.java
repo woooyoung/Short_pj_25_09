@@ -1,39 +1,34 @@
 package com.koreait.short_pj_25_09.domain.short_url.short_url.controller;
 
 import com.koreait.short_pj_25_09.domain.short_url.short_url.entity.Surl;
+import com.koreait.short_pj_25_09.domain.short_url.short_url.service.ShortUrlService;
+import com.koreait.short_pj_25_09.global.exception.GlobalException;
+import com.koreait.short_pj_25_09.global.rsData.RsData;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ShortUrlController {
 
-    private List<Surl> surls = new ArrayList<>();
-    private long surlLastId;
+    private final ShortUrlService shortUrlService;
+
 
     @GetMapping("/add")
     @ResponseBody
-    public Surl add(String body, String url) {
-        Surl surl = Surl.builder()
-                .id(++surlLastId)
-                .body(body)
-                .url(url)
-                .build();
-
-        surls.add(surl);
-
-        return surl;
+    public RsData<Surl> add(String body, String url){
+        return shortUrlService.add(body, url);
     }
 
     @GetMapping("/s/{body}/**")
     @ResponseBody
-    public Surl add(
+    public RsData<Surl> add(
             @PathVariable String body,
             HttpServletRequest req
     ) {
@@ -45,33 +40,19 @@ public class ShortUrlController {
 
         String[] urlBits = url.split("/",4);
 
-        System.out.println("Arrays.toString(urlBits): " + Arrays.toString(urlBits));
-
         url = urlBits[3];
 
-        Surl surl = Surl.builder()
-                .id(++surlLastId)
-                .body(body)
-                .url(url)
-                .build();
-
-        surls.add(surl);
-
-        return surl;
+       return shortUrlService.add(body, url);
     }
 
     @GetMapping("/g/{id}")
     public String go(
             @PathVariable long id
     ){
-        Surl surl = surls.stream()
-                .filter(_surl -> _surl.getId() == id)
-                .findFirst()
-                .orElse(null);
 
-        if(surl == null) throw new RuntimeException("%d번 데이터 없음".formatted(id));
+        Surl surl = shortUrlService.findById(id).orElseThrow(GlobalException.E404::new);
 
-        surl.increaseCount();
+        shortUrlService.increaseCount(surl);
 
         return "redirect:"+surl.getUrl();
     }
@@ -79,6 +60,7 @@ public class ShortUrlController {
     @GetMapping("/all")
     @ResponseBody
     public List<Surl> getAll(){
-        return surls;
+
+        return shortUrlService.findAll();
     }
 }
