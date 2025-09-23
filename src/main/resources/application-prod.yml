@@ -1,5 +1,27 @@
 server:
   port : 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://cwy-short-pj-db.internal:5432/surl_prod
+    username: postgres
+    password: JDzCbwCKesZdX4q
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        highlight_sql: false
+        use_sql_comments: false
+    show-sql: true
+logging:
+  level:
+    com.koreait.short_pj_25_09: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.orm.jdbc.extract: INFO
+    org.springframework.transaction.interceptor: INFO
 custom:
   site:
     name: "My Site Prod"

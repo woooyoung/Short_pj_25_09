@@ -11,7 +11,7 @@ spring:
     driver-class-name: org.h2.Driver
   #    url: jdbc:postgresql://localhost:5432/shortUrl_dev
 #    username: postgres
-#    password: koreait123414
+#    password: koreait123414ocam
 #    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -23,9 +23,6 @@ spring:
         highlight_sql: true
         use_sql_comments: true
     show-sql: true
-custom:
-  site:
-    name: "My Site"
 logging:
   level:
     com.koreait.short_pj_25_09: DEBUG
@@ -33,3 +30,6 @@ logging:
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE
     org.springframework.transaction.interceptor: TRACE
+custom:
+  site:
+    name: "My Site"
